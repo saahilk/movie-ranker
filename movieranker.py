@@ -1,5 +1,6 @@
 ##Made using api found at https://github.com/theapache64/movie_db
 import os
+import sys
 import operator
 import json,urllib.request
 
@@ -15,8 +16,11 @@ class Movie(object):
     def __repr__(self):
         return "<name:%s, rating:%s" % (self.name,self.m_rating)
     
-
-movielist=os.listdir('f:\Movies')
+if len(sys.argv)<2:
+	print("Please provide path to the directory")
+	sys.exit(0)
+	
+movielist=os.listdir(sys.argv[1])
 length=len(movielist)
 mlist=[]
 ini="http://theapache64.xyz:8080/movie_db/search?keyword="
