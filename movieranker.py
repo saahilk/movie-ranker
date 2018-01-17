@@ -23,7 +23,7 @@ if len(sys.argv)<2:
 movielist=os.listdir(sys.argv[1])
 length=len(movielist)
 mlist=[]
-ini="http://theapache64.xyz:8080/movie_db/search?keyword="
+ini="http://theapache64.com/movie_db/search?keyword="
 
 for i in range(length):
     movie=str(movielist[i])
