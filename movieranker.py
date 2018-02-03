@@ -38,15 +38,20 @@ for i in range(length):
     else:
         ind=min(b1,b2)
     movielist[i]=movie[:ind]
-    with urllib.request.urlopen(ini+movielist[i].strip().replace(' ','+')) as url:
-        data=json.loads(url.read().decode())
-        if data.get('error_code')==0:
-            mlist.append(Movie(movielist[i],data.get('data').get('rating')))
-            print(movielist[i]+"-------\t"+data.get('data').get('rating')+"\n")
-        else:
-            mlist.append(Movie(movielist[i],"-1"))
-            print(movielist[i]+"-------\tN/A\n")
-
+    try:
+        with urllib.request.urlopen(ini+movielist[i].strip().replace(' ','+')) as url:
+            try:
+                data=json.loads(url.read().decode())
+                if data.get('error_code')==0 and 'rating' in data.get('data'):
+                    mlist.append(Movie(movielist[i],data.get('data').get('rating')))
+                    print(movielist[i]+"-------\t"+data.get('data').get('rating')+"\n")
+                else:
+                    mlist.append(Movie(movielist[i],"-1"))
+                    print(movielist[i]+"-------\tN/A\n")
+            except:
+                pass
+    except:
+        pass
 cmp=operator.attrgetter("m_rating")
 sort_list=sorted(mlist,key=cmp,reverse=True)
 
